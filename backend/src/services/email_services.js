@@ -3,16 +3,25 @@ import aws from '@aws-sdk/client-ses';
 
 const transporter = () => {
     if (process.env.NODE_ENV === 'production') {
-        const ses = new aws.SES({
-            apiVersion: '2010-12-01',
-            region: process.env.AWS_REGION,
-            credentials: {
-                accessKeyId: process.env.AWS_ACCESS_KEY_ID ,
-                secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-            },
-        });
+        // const ses = new aws.SES({
+        //     apiVersion: '2010-12-01',
+        //     region: process.env.AWS_REGION,
+        //     credentials: {
+        //         accessKeyId: process.env.AWS_ACCESS_KEY_ID ,
+        //         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        //     },
+        // });
+        // return nodemailer.createTransport({
+        //     SES: { ses, aws },
+        // });
         return nodemailer.createTransport({
-            SES: { ses, aws },
+            host: process.env.EMAIL_HOST,
+            service: process.env.EMAIL_SERVICE,
+            port: process.env.EMAIL_PORT,
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
         });
     } else {
         return nodemailer.createTransport({
