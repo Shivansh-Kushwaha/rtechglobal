@@ -13,12 +13,14 @@ import {
 const router=express.Router();
 
 router.get("/", getAllBlogs);
-router.get("/:slug", getBlogBySlug);
 
 router.get("/id/:id", protectRoute,getBlogById);
 router.post("/createblog",protectRoute, createBlog);
 router.put("/updateblog/:id", protectRoute, updateBlog);
 router.delete("/deleteblog/:id", protectRoute, deleteBlog);
 router.delete("/deleteblogimage/:id", protectRoute, deleteBlogImage);
+
+router.get("/:slug", getBlogBySlug);
+
 
 export default router;
