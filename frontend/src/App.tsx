@@ -51,7 +51,7 @@ import { useEffect } from "react";
 const queryClient = new QueryClient();
 
 const App = () => {
-const { isAuthenticated, checkAuth } = useAuth();
+const { isAuthenticated } = useAuth();
 
 
   return (

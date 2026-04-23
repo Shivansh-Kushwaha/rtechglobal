@@ -35,8 +35,7 @@ const bookDemoSchema = new mongoose.Schema(
         }, 
         message: {
             type: String,
-            required: true,
-            mxlength: 500,
+            maxlength: 500,
         },
         status: {
             type: String,

@@ -139,8 +139,6 @@ export const resetPassword = async (req, res) => {
             return res.status(400).json({ message: "User with this email does not exist" });
         }
 
-        // Here you would typically generate a password reset token and send an email to the user with instructions on how to reset their password.
-        // For simplicity, we'll just return a success message.
         res.status(200).json({ message: "Password reset instructions have been sent to your email" });
     } catch (error) {
         console.log("Error in resetting password", error.message);

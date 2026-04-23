@@ -8,10 +8,12 @@ import { useEffect } from "react";
 
 
 const BlogSection = () => {
-  const { getAllBlogs, blogs, currentPage, totalPages } = useBlog();
+  const { getAllBlogs, blogs, currentPage } = useBlog();
+
   useEffect(() => {
     getAllBlogs(currentPage, 4);
   }, [currentPage]);
+  
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 

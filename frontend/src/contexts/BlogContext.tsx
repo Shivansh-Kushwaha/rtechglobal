@@ -112,7 +112,7 @@ export const useBlog = create<BlogState>((set) => ({
     },
 
     getBlogBySlug: async (slug) => {
-        set({ isGettingBlogBySlug: true });
+        set({ isGettingBlogBySlug: true , selectedBlogSlug: undefined});
         try {
             const res = await axiosInstance.get(`/blogs/${slug}`);
             set({ selectedBlogSlug: res.data });

@@ -4,6 +4,9 @@ import { sendBookDemoEmail } from "../services/email_services.js";
 export const getBookDemoRequests = async (req, res) => {
     try {
         const UsersBookedDemo = await bookDemoRequests.find({});
+        if (!UsersBookedDemo || UsersBookedDemo.length === 0) {
+            return res.status(404).json({ message: "No demo requests found" });
+        }
         res.status(200).json(UsersBookedDemo);
 
     } catch (error) {
@@ -18,8 +21,7 @@ export const postBookDemoRequests = async (req, res) => {
         if (!fullname || !email || !institution || !phone || !message || !institutionType || !city || !preferredDate) {
             return res.status(400).json({ message: "All fields are required" });
         }
-        console.log("Received book demo request:", req.body);
-
+        
         const user = await bookDemoRequests.findOne({ email });
 
         if (user) {

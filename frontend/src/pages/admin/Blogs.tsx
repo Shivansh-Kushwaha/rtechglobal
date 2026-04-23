@@ -35,9 +35,6 @@ const Blogs = () => {
     const { toast } = useToast();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        getAllBlogs();
-    }, []);
 
     const handleDelete = async () => {
         if (!deleteId) return;

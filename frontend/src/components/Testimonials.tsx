@@ -7,7 +7,8 @@ import { useTestimonial } from "@/contexts/TestimonialContext";
 
 
 const Testimonials = () => {
-  const { testimonials, getAllTestimonials, isGettingTestimonials } = useTestimonial();
+  const { testimonials } = useTestimonial();
+  
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 

@@ -13,12 +13,11 @@ const BlogPost = () => {
   const { slug } = useParams<{ slug: string }>();
 
   useEffect(() => {
-    if (!slug) return;
+
     getBlogBySlug(slug);
   }, [slug, getBlogBySlug]);
 
-
-  if (isGettingBlogBySlug) {
+  if (isGettingBlogBySlug || !selectedBlogSlug?.slug) {
     return (
       <div className="flex items-center justify-center h-screen">
         <span>Loading...</span>

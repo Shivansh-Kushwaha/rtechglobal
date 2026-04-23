@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import Toast from "react-hot-toast";
 import { useBookDemo } from "@/contexts/bookdemoContext.tsx";
 
+
 interface DemoModalProps {
   isOpen: boolean;
   onClose: () => void;
@@ -26,7 +27,21 @@ type formData = {
 
 const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
-  const validateForm = (): boolean => {
+  const { toast } = useToast();
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { postDemo, isPostingDemo } = useBookDemo();
+  const [formData, setFormData] = useState<formData>({
+    fullname: "",
+    institution: "",
+    institutionType: "",
+    email: "",
+    phone: "",
+    city: "",
+    preferredDate: "",
+    message: ""
+  });
+
+   const validateForm = (): boolean => {
     if (!formData.fullname.trim()) {
       Toast.error("Name is required");
       return false;
@@ -61,6 +76,10 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
       Toast.error("Preferred date is required");
       return false;
     }
+    if(new Date(formData.preferredDate) < new Date()) {
+      Toast.error("Preferred date cannot be in the past");
+      return false;
+    }
 
     if (!formData.phone.trim()) {
       Toast.error("Phone number is required");
@@ -75,20 +94,6 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
     return true;
   };
 
-
-  const { toast } = useToast();
-  const [isSubmitted, setIsSubmitted] = useState(false);
-  const { postDemo, isPostingDemo } = useBookDemo();
-  const [formData, setFormData] = useState<formData>({
-    fullname: "",
-    institution: "",
-    institutionType: "",
-    email: "",
-    phone: "",
-    city: "",
-    preferredDate: "",
-    message: ""
-  });
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitted(true);
@@ -107,12 +112,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
         message: "",
       });
     });
-
-    toast({
-      title: "Demo Booked!",
-      description: "Our team will contact you shortly to schedule your demo.",
-    });
-
+    setIsSubmitted(true);
   };
 
   const handleClose = () => {
@@ -306,7 +306,7 @@ const DemoModal = ({ isOpen, onClose }: DemoModalProps) => {
 
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
-                      Message / Requirements (Optional)
+                      Message / Requirements
                     </label>
                     <Textarea
                       placeholder="Tell us about your specific requirements or questions..."

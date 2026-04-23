@@ -17,6 +17,9 @@ export const updateWebsiteInfo = async (req, res) => {
       req.body,
       { new: true, upsert: true, runValidators: true }
     );
+    if (!info) {      
+      return res.status(404).json({ message: "Website info not found" });
+    }
     
     res.status(200).json(info);
   } catch (error) {

@@ -4,6 +4,11 @@ import { sendContactUsEmail } from "../services/email_services.js";
 export const getContactedUs = async (req, res) => {
     try {
         const UsersContacted = await contactUS.find({});
+        
+        if (!UsersContacted || UsersContacted.length === 0) {
+            return res.status(404).json({ message: "No contacted users found" });
+        }
+
         res.status(200).json(UsersContacted);
 
     } catch (error) {
@@ -36,6 +41,7 @@ export const postContactedUs = async (req, res) => {
         });
 
         sendContactUsEmail(email, fullname);
+
         if (newUser) {
             await newUser.save();
             res.status(200).json({ message: "Your message has been sent successfully" });
@@ -70,7 +76,7 @@ export const updateContactedUsStatus = async (req, res) => {
         );
 
         if (!updatedUser) {
-            return res.status(404).json({ message: "Demo request not found" });
+            return res.status(404).json({ message: "Contact request not found" });
         }
 
         res.status(200).json({ message: "Contact status updated successfully", user: updatedUser });

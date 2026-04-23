@@ -4,6 +4,9 @@ import cloudinary from "../lib/cloudinary.js";
 export const getAllTestimonials = async (req, res) => {
   try {
     const testimonials = await Testimonial.find().sort({ createdAt: -1 });
+    if (!testimonials) {
+      return res.status(404).json({ message: "No testimonials found" });
+    }
     res.json(testimonials);
   } catch (error) {
     res.status(500).json({ message: "Failed to fetch testimonials" });

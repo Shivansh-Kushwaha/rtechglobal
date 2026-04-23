@@ -6,12 +6,14 @@ import { useBlog } from '@/contexts/BlogContext'
 import { Loader2 } from "lucide-react";
 import { useEffect } from "react";
 
+
 interface ProtectedRouteProps {
   children: React.ReactNode;
 }
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { isAuthenticated, isCheckingAuth } = useAuth();
+      const checkAuth = useAuth((state) => state.checkAuth);
   const location = useLocation();
   const getDemo = useBookDemo((state) => state.getDemo);
   const getContact = useContact((state) => state.getContact);
@@ -19,11 +21,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
 
   useEffect(() => {
+    checkAuth();
     getAllBlogs();
-
     getDemo();
     getContact();
-  }, [ getDemo, getContact,]);
+  }, [checkAuth, getAllBlogs, getDemo, getContact]);
 
 
   if (isCheckingAuth) {

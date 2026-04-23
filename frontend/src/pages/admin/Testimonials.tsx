@@ -56,9 +56,9 @@ const Testimonials = () => {
   };
 
 
-  useEffect(() => {
-    fetchGoogleReviews();
-  }, []);
+  // useEffect(() => {
+  //   fetchGoogleReviews();
+  // }, []);
 
 
     const handleImageDelete = async () => {
